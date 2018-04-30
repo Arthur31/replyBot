@@ -1,0 +1,38 @@
+{% include "template/blank.njk" %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="/p/css/normalize.css">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" href="/p/css/index.css">
+
+{% endblock %}
+
+{% block main %}
+    <h1>WELCOME</h1>
+
+    <object class="button">
+        <embed class="noPE" src="/p/images/chat.svg" width="50" height="50">
+    </object>
+
+    <div class="chat" style="display: none;">
+        <div class="chat-title">
+            <h1 class="username"></h1>
+        </div>
+        <div class="messages">
+            <div class="messages-content"></div>
+        </div>
+        <div class="message-box">
+            <textarea type="text" class="message-input" placeholder="Type message..." onkeypress="process(event, this)"></textarea>
+            <button type="submit" class="message-submit">Send</button>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block customJS %}
+    <script src="/p/js/socket.io.js"></script>
+    <script src="/p/js/js.cookie.min.js"></script>
+    <script src="/p/js/autosize.min.js"></script>
+    <script src="/p/js/client.js"></script>
+{% endblock %}

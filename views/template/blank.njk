@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="/p/css/normalize.css">
+        <link rel="stylesheet" href="/p/css/bootstrap.min.css">
+        {% block customCSS %}{% endblock %}
+    </head>
+    <body>
+        {% block main %}{% endblock %}
+        {# <script src="/p/js/main.js" charset="utf-8"></script> #}
+        <script src="/p/js/jquery-3.3.1.js" charset="utf-8"></script>
+    </body>
+    {% block customJS %}{% endblock %}
+</html>

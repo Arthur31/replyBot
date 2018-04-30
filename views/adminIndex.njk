@@ -1,0 +1,33 @@
+{% include "template/blank.njk" %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="/p/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/p/css/admin.css">
+{% endblock %}
+
+{% block main %}
+
+    <div class="screen">
+        <div class="side_selector"></div>
+        <div class="chat">
+            <div class="chat-title">
+                <h1>Username</h1>
+            </div>
+            <div class="messages">
+                <div class="messages-content"></div>
+            </div>
+            <div class="message-box">
+                <textarea type="text" class="message-input" placeholder="Type message..." onkeypress="process(event, this)"></textarea>
+                <button type="submit" class="message-submit">Send</button>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block customJS %}
+    <script src="/p/js/socket.io.js"></script>
+    <script src="/p/js/autosize.min.js"></script>
+    <script src="/p/js/admin.js" charset="utf-8"></script>
+{% endblock %}
