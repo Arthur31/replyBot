@@ -46,7 +46,7 @@ socket.on('dispMessage', function(exp, mess) {
 		$('.messages-content').append('<div class="message message-personal new">' + mess.replace(/\n/g, '<br />') + '</div>')
 
 	} else {
-		var myNotification = new Notify("Nouveau message de " + pseudo, {
+		var myNotification = new Notify("Nouveau message de Admin", {
 			body: mess,
 			notifyShow: onNotifyShow
 		}).show();
