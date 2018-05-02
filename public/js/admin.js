@@ -92,7 +92,7 @@ socket.on('customerMessage', function(sessionId, message, pseudo) {
 socket.on('newCustomer', function(sessionId, name) {
 	audioConnect.play();
 
-	var myNotification = new Notify("Nouveau client, " + pseudo, {
+	var myNotification = new Notify("Nouveau client, " + name, {
 		body: "",
 		notifyShow: onNotifyShow
 	}).show();
