@@ -9,6 +9,18 @@ $('.convo').click(function() {
 });
 
 
+var audioSubmit = new Audio('/p/sound/chat_sent.m4a');
+var audioReceive = new Audio('/p/sound/chat_received.m4a');
+var audioConnect = new Audio('/p/sound/newCustomer.mp3');
+var audioDisconnect = new Audio('/p/sound/byeCustomer.m4a');
+
+
+function onNotifyShow() {
+	console.log('notification was shown!');
+}
+
+
+
 autosize($(".message-input"));
 
 var socket = io('/admin', {
@@ -43,8 +55,15 @@ socket.on('loadPrevMessages', function(data) {
 	}
 })
 
-socket.on('customerMessage', function(sessionId, message) {
+socket.on('customerMessage', function(sessionId, message, pseudo) {
 	console.log(sessionId + " --- " + message);
+	audioReceive.play();
+
+	var myNotification = new Notify("Nouveau message de " + pseudo, {
+		body: message,
+		notifyShow: onNotifyShow
+	}).show();
+
 	if (messages[sessionId] == undefined) {
 		messages[sessionId] = [{
 			"m": message,
@@ -71,6 +90,13 @@ socket.on('customerMessage', function(sessionId, message) {
 })
 
 socket.on('newCustomer', function(sessionId, name) {
+	audioConnect.play();
+
+	var myNotification = new Notify("Nouveau client, " + pseudo, {
+		body: "",
+		notifyShow: onNotifyShow
+	}).show();
+
 	console.log("connnect / reconect");
 	console.log(sessionId);
 	console.log(name);
@@ -101,6 +127,7 @@ socket.on('newCustomer', function(sessionId, name) {
 })
 
 socket.on('connectedCustomer', function(users) {
+	audioConnect.play();
 	for (user of users) {
 		if (messages[user.sessionId] == undefined) {
 			messages[user.sessionId] = [];
@@ -131,6 +158,7 @@ socket.on('dispMessage', function(sessionId, exp, mess) {
 
 
 socket.on('disconnectCustomer', function(sessionId) {
+	audioDisconnect.play();
 	$(".side_selector").find(`[data-id='${sessionId}']`).children(".status").css('background', 'grey');
 });
 
@@ -170,6 +198,7 @@ function process(e) {
 }
 
 function sendMessage() {
+	audioSubmit.play();
 	var message = $('.message-input').val();
 
 	while (message[0] == "\n" || message[0] == " ") {
@@ -201,10 +230,11 @@ function displayConvo(idToRestore) {
 	var data = messages[idToRestore];
 
 	for (message of data) {
+		// console.log(message["m"].replace('\n', '<br>'));
 		if (message["exp"]) {
-			$('.messages-content').append('<div class="message message-personal new">' + message["m"] + '</div>');
+			$('.messages-content').append('<div class="message message-personal new">' + message["m"].replace(/\n/g, '<br />') + '</div>');
 		} else {
-			$('.messages-content').append('<div class="message new">' + message["m"] + '</div>');
+			$('.messages-content').append('<div class="message new">' + message["m"].replace(/\n/g, '<br />') + '</div>');
 		}
 	}
 

@@ -232,7 +232,7 @@ io.on('connection', function(socket) {
 		// socket.broadcast.emit('dispMessage', 0, me);
 		// admin.emit('dispMessage', 0, me);
 
-		admin.emit('customerMessage', socket.sessionId, me);
+		admin.emit('customerMessage', socket.sessionId, me, socket.name);
 		// admin.emit('test');
 
 	})
@@ -340,7 +340,6 @@ io.of('/admin').on('connect', (socket) => {
 		Message.find({
 				from: socket.handshake.query.name
 			})
-			.limit(10)
 			.sort({
 				date: -1
 			})

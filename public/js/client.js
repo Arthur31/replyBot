@@ -43,10 +43,15 @@ socket.on('getName', function() {
 
 socket.on('dispMessage', function(exp, mess) {
 	if (exp) {
-		$('.messages-content').append('<div class="message message-personal new">' + mess + '</div>')
+		$('.messages-content').append('<div class="message message-personal new">' + mess.replace(/\n/g, '<br />') + '</div>')
 
 	} else {
-		$('.messages-content').append('<div class="message new">' + mess + '</div>')
+		var myNotification = new Notify("Nouveau message de " + pseudo, {
+			body: mess,
+			notifyShow: onNotifyShow
+		}).show();
+
+		$('.messages-content').append('<div class="message new">' + mess.replace(/\n/g, '<br />') + '</div>')
 	}
 	$('.messages').scrollTop($('.messages')[0].scrollHeight);
 });
@@ -103,3 +108,7 @@ $('.message-input').focusout(function() {
 	console.log('is leave Typing ...');
 	socket.emit('isTyping', 0);
 })
+
+function onNotifyShow() {
+	console.log('notification was shown!');
+}
